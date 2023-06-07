@@ -154,7 +154,7 @@ fn main() -> Result<()> {
 
         /*
          * Curiously, and possibly as an accident of history, ZFS snapshots are
-         * not shown as read-only in file system flags returned by vfsstat!  One
+         * not shown as read-only in file system flags returned by statvfs!  One
          * could argue that this is a bug which we should go and fix.
          */
         if (f.f_flag & libc::ST_RDONLY) != 0 {
@@ -170,7 +170,7 @@ fn main() -> Result<()> {
          * pool in question, but can be used to distinguish one dataset or
          * snapshot from another.
          *
-         * Curiously, in the snapshot case, the vfsstat(2) f_fsid value reflects
+         * Curiously, in the snapshot case, the statvfs(2) f_fsid value reflects
          * the unique device number of the _file system_ rather than the
          * snapshot itself.  Unfortunately because it is a compressed device ID,
          * and this is a 64-bit system, I do not believe there is any public
@@ -195,7 +195,7 @@ fn main() -> Result<()> {
 
         /*
          * Get the st_fstype string ready for comparison and confirm
-         * it matches what we got from vfsstat(2).
+         * it matches what we got from statvfs(2).
          *
          * The libc crate "struct stat" definition has made a curious
          * decision to make "st_fstype" into a _private_ field named
